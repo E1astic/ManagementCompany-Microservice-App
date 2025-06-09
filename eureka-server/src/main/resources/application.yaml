@@ -9,7 +9,8 @@ eureka:
   client:
     register-with-eureka: false
     fetch-registry: false
-    service-url.defaultZone: http://localhost:8090/management-company
+    service-url:
+      defaultZone: http://localhost:8090/eureka
 
 logging:
   level:

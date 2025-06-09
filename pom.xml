@@ -19,7 +19,6 @@
 
 	<modules>
 		<module>dependency-bom</module>
-		<module>eureka-server</module>
 	</modules>
 
 </project>
