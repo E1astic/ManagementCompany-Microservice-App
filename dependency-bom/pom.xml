@@ -26,12 +26,15 @@
         <spring-boot.version>3.5.0</spring-boot.version>
         <spring-cloud.version>2025.0.0</spring-cloud.version>
         <spring-cloud-starter.version>4.3.0</spring-cloud-starter.version>
+        <lombok.version>1.18.38</lombok.version>
+        <modelmapper.version>3.2.3</modelmapper.version>
         <reactor-test.version>3.7.6</reactor-test.version>
         <jwt.version>0.12.6</jwt.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!-- Spring Boot -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
@@ -42,6 +45,7 @@
                 <artifactId>spring-boot-starter-security</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
+            <!-- Spring Boot -->
 
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -49,7 +53,13 @@
                 <optional>true</optional>
                 <version>${lombok.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.modelmapper</groupId>
+                <artifactId>modelmapper</artifactId>
+                <version>${modelmapper.version}</version>
+            </dependency>
 
+            <!-- JWT -->
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt-api</artifactId>
@@ -67,7 +77,9 @@
                 <version>${jwt.version}</version>
                 <scope>runtime</scope>
             </dependency>
+            <!-- JWT -->
 
+            <!-- Spring Webflux -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-webflux</artifactId>
@@ -84,6 +96,7 @@
                 <scope>test</scope>
                 <version>${reactor-test.version}</version>
             </dependency>
+            <!-- Spring Webflux -->
 
             <!-- Eureka -->
             <dependency>

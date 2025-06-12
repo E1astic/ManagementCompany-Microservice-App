@@ -11,7 +11,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @Configuration
 @EnableWebFluxSecurity
 @RequiredArgsConstructor
-public class SecurityConfig {
+public class GatewaySecurityFilter {
 
     private final JwtFilter jwtFilter;
 
@@ -23,6 +23,7 @@ public class SecurityConfig {
                 .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
                 .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
                 .authorizeExchange(authExchange -> authExchange
+                        .pathMatchers("/auth/login", "/auth/register").permitAll()
                         .pathMatchers("/main/shared", "/main/info").permitAll()
                         .pathMatchers("/main/admin").hasRole("ADMIN")
                         .anyExchange().authenticated())
