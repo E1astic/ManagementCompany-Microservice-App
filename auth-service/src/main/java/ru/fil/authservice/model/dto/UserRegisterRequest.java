@@ -4,18 +4,28 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserRegisterRequest {
 
-    private String email;
-
-    private String password;
+    private String surname;
 
     private String name;
 
-    private String surname;
+    private String patronymic;
 
-    private Integer birthYear;
+    private LocalDate birthDate;
+
+    private String documentNum;
+
+    private String email;
+
+    private String phone;
+
+    private String password;
+
+    private Integer apartmentId;
 }

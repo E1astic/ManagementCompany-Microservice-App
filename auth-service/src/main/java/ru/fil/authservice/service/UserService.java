@@ -34,6 +34,7 @@ public class UserService implements UserDetailsService {
         );
     }
 
+    @Transactional
     public void saveUser(User user) {
         userRepository.save(user);
     }

@@ -7,6 +7,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import ru.fil.authservice.exception.ApartmentNotFoundException;
 import ru.fil.authservice.exception.ExistingEmailException;
 import ru.fil.authservice.model.dto.ExceptionResponse;
 
@@ -24,5 +25,11 @@ public class AuthControllerAdvice {
     public ResponseEntity<ExceptionResponse> handleException(ExistingEmailException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                 new ExceptionResponse("Пользователь с таким email уже существует"));
+    }
+
+    @ExceptionHandler(ApartmentNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleException(ApartmentNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                new ExceptionResponse("Данного жилища не сущетвует"));
     }
 }

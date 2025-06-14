@@ -19,6 +19,7 @@
         <module>../eureka-client</module>
         <module>../api-gateway</module>
         <module>../auth-service</module>
+        <module>../house-service</module>
     </modules>
 
     <properties>
@@ -100,6 +101,12 @@
                 <version>${reactor-test.version}</version>
             </dependency>
             <!-- Spring Webflux -->
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-openfeign</artifactId>
+                <version>${spring-cloud-starter.version}</version>
+            </dependency>
 
             <!-- Eureka -->
             <dependency>

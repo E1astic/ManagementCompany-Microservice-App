@@ -12,6 +12,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "users")
@@ -26,20 +29,32 @@ public class User {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "email")
-    private String email;
-
-    @Column(name = "password")
-    private String password;
+    @Column(name = "surname")
+    private String surname;
 
     @Column(name = "name")
     private String name;
 
-    @Column(name = "surname")
-    private String surname;
+    @Column(name = "patronymic")
+    private String patronymic;
 
-    @Column(name = "birth_year")
-    private Integer birthYear;
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
+
+    @Column(name = "document_num")
+    private String documentNum;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "apartment_id")
+    private Integer apartmentId;
 
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id")

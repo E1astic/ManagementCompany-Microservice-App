@@ -24,6 +24,7 @@ public class GatewaySecurityFilter {
                 .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
                 .authorizeExchange(authExchange -> authExchange
                         .pathMatchers("/auth/login", "/auth/register").permitAll()
+                        .pathMatchers("/house/**").permitAll()
                         .pathMatchers("/main/shared", "/main/info").permitAll()
                         .pathMatchers("/main/admin").hasRole("ADMIN")
                         .anyExchange().authenticated())

@@ -17,6 +17,7 @@ public class UserConverter {
 
     public User mapToUser(UserRegisterRequest userRegisterRequest) {
         User user = modelMapper.map(userRegisterRequest, User.class);
+        user.setId(null);
         user.setRole(roleRepository.findByName("ROLE_USER").get());
         return user;
     }
