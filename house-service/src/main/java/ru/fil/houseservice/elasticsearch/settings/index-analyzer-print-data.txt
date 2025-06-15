@@ -1,0 +1,7 @@
+GET /addresses/_search
+{
+  "size": 10,
+  "query": {
+    "match_all": {}
+  }
+}

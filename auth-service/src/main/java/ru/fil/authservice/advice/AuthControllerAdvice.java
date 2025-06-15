@@ -30,6 +30,6 @@ public class AuthControllerAdvice {
     @ExceptionHandler(ApartmentNotFoundException.class)
     public ResponseEntity<ExceptionResponse> handleException(ApartmentNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new ExceptionResponse("Данного жилища не сущетвует"));
+                new ExceptionResponse("Указанной собственности не существует"));
     }
 }

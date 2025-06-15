@@ -16,10 +16,8 @@ spring:
   flyway:
     enabled: true
     validate-on-migrate: true
-
-  #elasticsearch:
-  #  uris:
-      
+  elasticsearch:
+    uris: http://localhost:9200
   data:
     redis:
       host: localhost

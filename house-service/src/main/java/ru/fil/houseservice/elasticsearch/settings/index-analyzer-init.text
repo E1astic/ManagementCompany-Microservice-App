@@ -1,0 +1,47 @@
+PUT /addresses
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "russian_lowercase": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "russian_stop",
+            "russian_stemmer"
+          ]
+        }
+      },
+      "filter": {
+        "russian_stop": {
+          "type": "stop",
+          "stopwords": "_russian_"
+        },
+        "russian_stemmer": {
+          "type": "stemmer",
+          "name": "russian"
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "fullAddress": {
+        "type": "text",
+        "analyzer": "russian_lowercase",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "id": { "type": "keyword" },
+      "street": { "type": "keyword" },
+      "house": { "type": "keyword" },
+      "entrance": { "type": "keyword" },
+      "apartment": { "type": "keyword" },
+      "apartmentId": { "type": "integer" }
+    }
+  }
+}

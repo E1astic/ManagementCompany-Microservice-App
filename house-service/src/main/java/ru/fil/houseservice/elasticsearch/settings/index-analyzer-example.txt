@@ -1,0 +1,5 @@
+POST /addresses/_analyze
+{
+  "analyzer": "russian_lowercase",
+  "text": "ул Ленина д 45"
+}

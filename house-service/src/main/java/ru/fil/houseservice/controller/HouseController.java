@@ -7,11 +7,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.fil.houseservice.elasticsearch.document.AddressDocument;
+import ru.fil.houseservice.elasticsearch.service.AddressElasticService;
 import ru.fil.houseservice.model.dto.ApartmentDto;
-import ru.fil.houseservice.model.dto.ApartmentSearchDto;
-import ru.fil.houseservice.model.dto.StreetDto;
 import ru.fil.houseservice.service.ApartmentService;
-import ru.fil.houseservice.service.StreetService;
 
 import java.util.List;
 
@@ -21,7 +20,7 @@ import java.util.List;
 public class HouseController {
 
     private final ApartmentService apartmentService;
-    private final StreetService streetService;
+    private final AddressElasticService addressElasticService;
 
     @GetMapping("/apartments")
     public ResponseEntity<List<ApartmentDto>> getAllApartments() {
@@ -36,12 +35,7 @@ public class HouseController {
     }
 
     @GetMapping("/apartments/search")
-    public ResponseEntity<List<ApartmentSearchDto>> getAddressesByName(@RequestParam("value") String value) {
-        return ResponseEntity.ok(apartmentService.getAllApartmentsWithIdAndDetailsContaining(value));
-    }
-
-    @GetMapping("/streets")
-    public ResponseEntity<List<StreetDto>> getStreetsByName(@RequestParam("value") String value) {
-        return ResponseEntity.ok(streetService.getAllStreetsWithName(value));
+    public ResponseEntity<List<AddressDocument>> findAddressesWithFuzzy(@RequestParam("value") String value) {
+        return ResponseEntity.ok(addressElasticService.findAddressesWithFuzzy(value));
     }
 }

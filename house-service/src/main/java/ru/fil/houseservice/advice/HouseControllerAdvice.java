@@ -13,6 +13,6 @@ public class HouseControllerAdvice {
     @ExceptionHandler(ApartmentNotFoundException.class)
     public ResponseEntity<ExceptionResponse> handleException(ApartmentNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                new ExceptionResponse("Данной собственности не существует"));
+                new ExceptionResponse("Указанной собственности не существует"));
     }
 }
