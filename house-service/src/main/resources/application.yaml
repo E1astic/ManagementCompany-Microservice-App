@@ -17,6 +17,18 @@ spring:
     enabled: true
     validate-on-migrate: true
 
+  #elasticsearch:
+  #  uris:
+      
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  cache:
+    type: redis
+    redis:
+      time-to-live: 300000
+
 eureka:
   client:
     service-url:
