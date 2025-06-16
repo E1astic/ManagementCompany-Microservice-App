@@ -11,11 +11,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.fil.authservice.converter.UserConverter;
 import ru.fil.authservice.exception.ApartmentNotFoundException;
 import ru.fil.authservice.exception.ExistingEmailException;
-import ru.fil.authservice.feign.HouseFeignClient;
+import ru.fil.authservice.feign.AddressFeignClient;
 import ru.fil.authservice.model.dto.JwtRequest;
 import ru.fil.authservice.model.dto.UserRegisterRequest;
 import ru.fil.authservice.model.entity.User;
@@ -30,7 +29,7 @@ public class AuthService {
     private final JwtService jwtService;
     private final UserConverter userConverter;
     private final PasswordEncoder passwordEncoder;
-    private final HouseFeignClient houseFeignClient;
+    private final AddressFeignClient houseFeignClient;
 
 
     public String login(JwtRequest jwtRequest) throws BadCredentialsException {
@@ -53,7 +52,7 @@ public class AuthService {
                     throw new ApartmentNotFoundException();
                 }
             }
-            log.info("Выполнен запрос из auth-service в house-service через feign-client");
+            log.info("Request from AUTH-SERVICE to HOUSE-SERVICE by feign-client");
             User user = userConverter.mapToUser(userRegisterRequest);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userService.saveUser(user);

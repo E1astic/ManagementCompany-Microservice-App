@@ -22,10 +22,10 @@ spring:
               uri: lb://auth-service
               predicates:
                 - Path=/auth/**
-            - id: house-service-route
-              uri: lb://house-service
+            - id: address-service-route
+              uri: lb://address-service
               predicates:
-                - Path=/house/**
+                - Path=/address/**
 
 eureka:
   client:
