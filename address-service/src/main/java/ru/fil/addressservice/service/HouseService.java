@@ -1,6 +1,7 @@
 package ru.fil.addressservice.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.fil.addressservice.converter.HouseConverter;
@@ -11,7 +12,6 @@ import ru.fil.addressservice.model.dto.HouseRegisterRequest;
 import ru.fil.addressservice.model.entity.Apartment;
 import ru.fil.addressservice.model.entity.House;
 import ru.fil.addressservice.model.entity.Street;
-import ru.fil.addressservice.repository.ApartmentRepository;
 import ru.fil.addressservice.repository.HouseRepository;
 import ru.fil.addressservice.repository.StreetRepository;
 
@@ -25,6 +25,7 @@ public class HouseService {
     private final StreetRepository streetRepository;
     private final AddressElasticRepository addressElasticRepository;
     private final HouseConverter houseConverter;
+    private final RedisCacheService redisCacheService;
 
     @Transactional
     public Integer save(HouseRegisterRequest houseRegisterRequest) {
@@ -36,6 +37,7 @@ public class HouseService {
     }
 
     @Transactional
+    @CacheEvict(cacheNames = "addresses", allEntries = true)
     public void deleteById(int id) {
         House house = houseRepository.findById(id).orElseThrow(HouseNotFoundException::new);
         List<Integer> apartmentIds = house.getApartments()
@@ -44,5 +46,6 @@ public class HouseService {
                 .toList();
         addressElasticRepository.deleteByApartmentIdIn(apartmentIds);
         houseRepository.delete(house);
+        redisCacheService.evictApartmentsCache(apartmentIds);
     }
 }

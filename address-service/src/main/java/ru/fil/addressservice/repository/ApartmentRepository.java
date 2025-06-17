@@ -18,5 +18,5 @@ public interface ApartmentRepository extends JpaRepository<Apartment, Integer> {
     @Query("SELECT a FROM Apartment a JOIN FETCH a.house h JOIN FETCH h.street WHERE a.id = :id")
     Optional<Apartment> findByIdWithDetails(@Param("id") int id);
 
-    List<Apartment> findByIdIn(List<Integer> ids);
+    List<Apartment> findByHouseIdIn(List<Integer> ids);
 }

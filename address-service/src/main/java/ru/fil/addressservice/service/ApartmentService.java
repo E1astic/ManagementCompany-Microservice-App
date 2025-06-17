@@ -2,7 +2,10 @@ package ru.fil.addressservice.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.fil.addressservice.converter.ApartmentConverter;
@@ -47,6 +50,10 @@ public class ApartmentService {
     }
 
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(cacheNames = "apartments", key = "#result"),
+            @CacheEvict(cacheNames = "addresses", allEntries = true)
+    })
     public Integer save(ApartmentRegisterRequest apartmentRegisterRequest) {
         House house = houseRepository.findById(apartmentRegisterRequest.getHouseId())
                 .orElseThrow(HouseNotFoundException::new);
