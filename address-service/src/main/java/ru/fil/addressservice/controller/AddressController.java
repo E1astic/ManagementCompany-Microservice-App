@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.fil.addressservice.elasticsearch.document.AddressDocument;
 import ru.fil.addressservice.elasticsearch.service.AddressElasticService;
+import ru.fil.addressservice.model.dto.ApartmentApplicationDto;
 import ru.fil.addressservice.model.dto.ApartmentDto;
 import ru.fil.addressservice.model.dto.ApartmentRegisterRequest;
 import ru.fil.addressservice.model.dto.ApartmentRegisterResponse;
@@ -45,6 +46,11 @@ public class AddressController {
     public ResponseEntity<ApartmentDto> getApartmentById(@PathVariable("id") Integer id) {
         ApartmentDto apartmentDto = apartmentService.getApartmentWithDetailsById(id);
         return ResponseEntity.ok(apartmentDto);
+    }
+
+    @GetMapping("/apartments/forApp")
+    public List<ApartmentApplicationDto> getApartmentsByIds(@RequestParam List<Integer> ids) {
+        return apartmentService.getAllApartmentsWithDetailsByIdIn(ids);
     }
 
     @GetMapping("/apartments/search")

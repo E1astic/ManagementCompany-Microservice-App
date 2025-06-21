@@ -13,19 +13,26 @@ spring:
               enabled: true
               lower-case-service-id: true
           routes:
-
             - id: eclient-route
               uri: lb://eclient
               predicates:
                 - Path=/main/**
-            - id: auth-service-route
+            - id: auth-service-auth-route
               uri: lb://auth-service
               predicates:
                 - Path=/auth/**
+            - id: auth-service-user-route
+              uri: lb://auth-service
+              predicates:
+                - Path=/user/**
             - id: address-service-route
               uri: lb://address-service
               predicates:
                 - Path=/address/**
+            - id: application-service-route
+              uri: lb://application-service
+              predicates:
+                - Path=/application/**
 
 eureka:
   client:

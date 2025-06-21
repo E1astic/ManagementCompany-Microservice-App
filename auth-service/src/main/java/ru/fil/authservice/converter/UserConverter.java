@@ -3,6 +3,7 @@ package ru.fil.authservice.converter;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+import ru.fil.authservice.model.dto.UserApplicationDto;
 import ru.fil.authservice.model.dto.UserRegisterRequest;
 import ru.fil.authservice.model.entity.User;
 import ru.fil.authservice.repository.RoleRepository;
@@ -20,5 +21,9 @@ public class UserConverter {
         user.setId(null);
         user.setRole(roleRepository.findByName("ROLE_USER").get());
         return user;
+    }
+
+    public UserApplicationDto mapToUserApplicationDto(User user) {
+        return modelMapper.map(user, UserApplicationDto.class);
     }
 }

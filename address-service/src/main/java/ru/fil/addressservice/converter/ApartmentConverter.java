@@ -2,6 +2,7 @@ package ru.fil.addressservice.converter;
 
 import org.springframework.stereotype.Component;
 import ru.fil.addressservice.elasticsearch.document.AddressDocument;
+import ru.fil.addressservice.model.dto.ApartmentApplicationDto;
 import ru.fil.addressservice.model.dto.ApartmentDto;
 import ru.fil.addressservice.model.dto.ApartmentRegisterRequest;
 import ru.fil.addressservice.model.entity.Apartment;
@@ -28,6 +29,17 @@ public class ApartmentConverter {
                 .build();
         addressDocument.updateFullAddress();
         return addressDocument;
+    }
+
+    public ApartmentApplicationDto mapToApartmentApplicationDto(Apartment apartment) {
+        return ApartmentApplicationDto.builder()
+                .id(apartment.getId())
+                .street(apartment.getHouse().getStreet().getName())
+                .house(apartment.getHouse().getNumber())
+                .entrance(apartment.getEntranceNum())
+                .floor(apartment.getFloorNum())
+                .apartment(apartment.getApartmentNum())
+                .build();
     }
 
     public Apartment mapToApartment(ApartmentRegisterRequest apartmentRegisterRequest, House house) {

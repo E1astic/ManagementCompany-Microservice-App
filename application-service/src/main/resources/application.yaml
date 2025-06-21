@@ -1,0 +1,22 @@
+server:
+  port: 0
+
+spring:
+  application:
+    name: application-service
+  datasource:
+    url: jdbc:postgresql://localhost:5435/applications
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  cloud:
+    openfeign:
+      enabled: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8090/eureka
+
+jwt:
+  secret: ff25ccb4b05f79d488a71bf3f09fa2f10ce8accd78cb4364026c99f43328f63c362604185fcbc224476f0454f6d73bdc10c8c67f881f44f44fe0f24c1dd89310bba02b91eba20bc2833b02d6df58785d4d8a4b04451a1c7b2de7a47367b7f658cdbde413da6b2c34fe2d9be2f10c4c31017be9df1e4f360a142811b6c9ddc441a19dfc178b22faac670a1cb14c8ea08f4088f1bcb2d95a19a079cdbe051bee898733bd22758051f011305258726fa9c26db13a46a3bc09db7d36cfda8318d22c373e4a38cce58c16755a3a1ae7e256e3ba060372b56e095b909cc1add2b4d4108304cf6bdea9359cc2e453bca7be38e3fdc8c080cd3219a4a7be4a1e39d444e8
