@@ -32,6 +32,7 @@ public class GatewaySecurityFilter {
                                 "/address/apartments/add", "/address/apartments/forApp").hasRole("ADMIN")
                         .pathMatchers("/address/**").permitAll()
                         .pathMatchers("/application/update/{id}/{status}", "/application/all").hasRole("ADMIN")
+                        .pathMatchers("/notification/**").permitAll()
                         .anyExchange().authenticated())
                 .addFilterAt(jwtFilter, SecurityWebFiltersOrder.AUTHENTICATION);
 

@@ -26,12 +26,16 @@ public class ApplicationService {
     private final ApplicationConverter applicationConverter;
     private final JwtService jwtService;
     private final ApplicationDetailsService applicationDetailsService;
+    private final NotificationService notificationService;
 
     @Transactional
     public int createApplication(String authHeader, ApplicationCreationRequest applicationCreationDto) {
         int userId = jwtService.getUserIdFromHeader(authHeader);
         Application application = applicationRepository.save(applicationConverter
                 .mapToApplication(applicationCreationDto, userId));
+
+        // отправить уведомление админам а создании новой заявки
+
         return application.getId();
     }
 
@@ -54,6 +58,8 @@ public class ApplicationService {
         int rowsUpdated = applicationRepository.updateStatusById(id, applicationStatus);
         if(rowsUpdated == 0) {
             throw new ApplicationNotFoundException();
+        } else {
+            notificationService.sendStatusEmail(id, applicationStatus);
         }
     }
 
