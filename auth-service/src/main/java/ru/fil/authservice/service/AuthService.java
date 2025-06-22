@@ -7,10 +7,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.fil.authservice.converter.UserConverter;
 import ru.fil.authservice.exception.ApartmentNotFoundException;
 import ru.fil.authservice.exception.ExistingEmailException;
@@ -18,6 +20,7 @@ import ru.fil.authservice.feign.AddressFeignClient;
 import ru.fil.authservice.model.dto.JwtRequest;
 import ru.fil.authservice.model.dto.UserRegisterRequest;
 import ru.fil.authservice.model.entity.User;
+import ru.fil.authservice.model.security.CustomUserDetails;
 
 @Service
 @RequiredArgsConstructor
@@ -33,10 +36,10 @@ public class AuthService {
 
 
     public String login(JwtRequest jwtRequest) throws BadCredentialsException {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 jwtRequest.getEmail(), jwtRequest.getPassword()));
-        User user = userService.findByUsername(jwtRequest.getEmail());
-        return jwtService.generateToken(user);
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        return jwtService.generateToken(userDetails);
     }
 
     public void register(UserRegisterRequest userRegisterRequest) {

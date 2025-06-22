@@ -10,12 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.fil.authservice.converter.UserConverter;
 import ru.fil.authservice.model.dto.UserApplicationDto;
 import ru.fil.authservice.model.entity.User;
+import ru.fil.authservice.model.security.CustomUserDetails;
 import ru.fil.authservice.repository.UserRepository;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
@@ -23,21 +25,21 @@ public class UserService implements UserDetailsService {
 
     public User findByUsername(String username) {
         return userRepository.findByEmail(username).orElseThrow(
-                () -> new UsernameNotFoundException(String.format("Пользователь с email %s не найден", username)));
+                () -> new UsernameNotFoundException("Неправильный логин или пароль"));
     }
 
     @Override
-    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByUsername(username);
         return getUserDetailsFromUserEntity(user);
     }
 
-    public UserDetails getUserDetailsFromUserEntity(User user) {
-        return new org.springframework.security.core.userdetails.User(
+    private UserDetails getUserDetailsFromUserEntity(User user) {
+        return new CustomUserDetails(
                 user.getEmail(),
                 user.getPassword(),
-                List.of(new SimpleGrantedAuthority(user.getRole().getName()))
+                List.of(new SimpleGrantedAuthority(user.getRole().getName())),
+                user.getId()
         );
     }
 
