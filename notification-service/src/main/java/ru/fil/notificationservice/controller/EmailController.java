@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.fil.notificationservice.model.enums.ApplicationStatus;
+import ru.fil.common.enums.ApplicationStatus;
 import ru.fil.notificationservice.service.EmailService;
 
 @RestController
@@ -20,7 +20,7 @@ public class EmailController {
             @RequestParam("email") String email,
             @RequestParam("appId") Integer appId,
             @RequestParam("status") ApplicationStatus status) {
-        emailService.sendStatusEmail(email, appId, status);
+        //emailService.sendStatusEmail(email, appId, status);
         return "Сообщение успешно отправлено";
     }
 }

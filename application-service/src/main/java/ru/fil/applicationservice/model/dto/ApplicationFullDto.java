@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.fil.applicationservice.model.enums.ApplicationStatus;
+import ru.fil.common.enums.ApplicationStatus;
 
 import java.time.LocalDateTime;
 

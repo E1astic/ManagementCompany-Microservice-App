@@ -12,8 +12,8 @@ import ru.fil.applicationservice.model.dto.ApplicationFullDto;
 import ru.fil.applicationservice.model.dto.ApplicationPersonalDto;
 import ru.fil.applicationservice.model.dto.UserApplicationDto;
 import ru.fil.applicationservice.model.entity.Application;
-import ru.fil.applicationservice.model.enums.ApplicationStatus;
 import ru.fil.applicationservice.repository.ApplicationRepository;
+import ru.fil.common.enums.ApplicationStatus;
 
 import java.util.List;
 import java.util.Map;

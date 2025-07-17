@@ -1,4 +1,4 @@
-package ru.fil.applicationservice.model.enums;
+package ru.fil.common.enums;
 
 public enum ApplicationStatus {
     CREATED,               // создана

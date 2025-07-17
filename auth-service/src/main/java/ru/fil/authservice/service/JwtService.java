@@ -32,7 +32,7 @@ public class JwtService {
         claims.put("role", userDetails.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
-                .findFirst());
+                .findFirst().orElse("ROLE_USER"));
         claims.put("userId", userDetails.getUserId());
         return claims;
     }

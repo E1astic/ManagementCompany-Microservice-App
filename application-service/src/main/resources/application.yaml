@@ -9,9 +9,23 @@ spring:
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
   cloud:
     openfeign:
       enabled: true
+  kafka:
+    bootstrap-servers:
+      - localhost:29092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      notification-topic: notificationTopic
+      partitions-num: 1
+      replicas-num: 1
+      properties:
+        acks: 1
+
 
 eureka:
   client:

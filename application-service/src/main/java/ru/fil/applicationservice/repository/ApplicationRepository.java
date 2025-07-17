@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.fil.applicationservice.model.entity.Application;
-import ru.fil.applicationservice.model.enums.ApplicationStatus;
+import ru.fil.common.enums.ApplicationStatus;
 
 import java.util.List;
 

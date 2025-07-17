@@ -7,7 +7,7 @@ import ru.fil.applicationservice.model.dto.ApplicationFullDto;
 import ru.fil.applicationservice.model.dto.ApplicationPersonalDto;
 import ru.fil.applicationservice.model.dto.UserApplicationDto;
 import ru.fil.applicationservice.model.entity.Application;
-import ru.fil.applicationservice.model.enums.ApplicationStatus;
+import ru.fil.common.enums.ApplicationStatus;
 
 import java.time.LocalDateTime;
 import java.util.Map;

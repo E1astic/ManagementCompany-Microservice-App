@@ -13,13 +13,13 @@ import java.util.Optional;
 public interface ApartmentRepository extends JpaRepository<Apartment, Integer> {
 
     @Query("SELECT a FROM Apartment a JOIN FETCH a.house h JOIN FETCH h.street")
-    List<Apartment> findAllWithDetails();
+    List<Apartment> findAll();
 
     @Query("SELECT a FROM Apartment a JOIN FETCH a.house h JOIN FETCH h.street WHERE a.id IN :ids")
-    List<Apartment> findAllWithDetailsByIdIn(@Param("ids") List<Integer> ids);
+    List<Apartment> findAllByIdIn(@Param("ids") List<Integer> ids);
 
     @Query("SELECT a FROM Apartment a JOIN FETCH a.house h JOIN FETCH h.street WHERE a.id = :id")
-    Optional<Apartment> findByIdWithDetails(@Param("id") int id);
+    Optional<Apartment> findById(@Param("id") int id);
 
     List<Apartment> findByHouseIdIn(List<Integer> ids);
 }

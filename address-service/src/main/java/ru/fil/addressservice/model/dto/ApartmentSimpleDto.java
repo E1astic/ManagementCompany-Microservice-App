@@ -11,7 +11,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ApartmentDto implements Serializable {
+public class ApartmentSimpleDto implements Serializable {
 
     private String street;
 

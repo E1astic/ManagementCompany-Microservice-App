@@ -6,8 +6,9 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import ru.fil.common.dto.NotificationBody;
 import ru.fil.notificationservice.exception.EmailSendingException;
-import ru.fil.notificationservice.model.enums.ApplicationStatus;
+import ru.fil.common.enums.ApplicationStatus;
 
 @Service
 @RequiredArgsConstructor
@@ -16,11 +17,12 @@ public class EmailService {
 
     private final JavaMailSender mailSender;
 
-    public void sendStatusEmail(String emailTo, Integer appId, ApplicationStatus applicationStatus) {
-        SimpleMailMessage message = createSimpleMailMessage(emailTo, appId, applicationStatus);
+    public void sendStatusEmail(NotificationBody notification) {
+        SimpleMailMessage message = createSimpleMailMessage(
+                notification.getEmailTo(), notification.getApplicationId(), notification.getApplicationStatus());
         try {
             mailSender.send(message);
-            log.info(String.format("Sending email to address %s", emailTo));
+            log.info(String.format("Sending email to address %s", notification.getEmailTo()));
         } catch (MailException e) {
             throw new EmailSendingException();
         }
@@ -30,7 +32,7 @@ public class EmailService {
                                                       ApplicationStatus applicationStatus) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("dinoroma2000@gmail.com");
-        message.setTo(emailTo);
+        message.setTo("darkr2004@mail.ru");
         message.setSubject("Умедомление о смене статуса заявки");
         String status = extractStatusForText(applicationStatus);
         message.setText(String.format("Статус вашей заявки с номером № %d был изменен на '%s'.\n" +

@@ -33,6 +33,7 @@
         <lombok.version>1.18.38</lombok.version>
         <postgresql.version>42.7.6</postgresql.version>
         <flyway.version>11.9.1</flyway.version>
+        <spring.kafka.version>3.3.0</spring.kafka.version>
         <modelmapper.version>3.2.3</modelmapper.version>
         <reactor-test.version>3.7.6</reactor-test.version>
         <jwt.version>0.12.6</jwt.version>
@@ -171,6 +172,20 @@
                 <artifactId>spring-boot-starter-mail</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
+
+            <!-- Kafka -->
+            <dependency>
+                <groupId>org.springframework.kafka</groupId>
+                <artifactId>spring-kafka</artifactId>
+                <version>${spring.kafka.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.kafka</groupId>
+                <artifactId>spring-kafka-test</artifactId>
+                <scope>test</scope>
+                <version>${spring.kafka.version}</version>
+            </dependency>
+            <!-- Kafka -->
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>

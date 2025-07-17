@@ -18,6 +18,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class StreetService {
 
     private final StreetRepository streetRepository;
@@ -35,7 +36,7 @@ public class StreetService {
     @Transactional
     @CacheEvict(cacheNames = "addresses", allEntries = true)
     public void deleteById(int id) {
-        Street street = streetRepository.findById(id).orElseThrow(StreetNotFoundException::new);
+        Street street = streetRepository.findByIdWithHouses(id).orElseThrow(StreetNotFoundException::new);
         List<Integer> houseIds = street.getHouses()
                 .stream()
                 .map(House::getId)

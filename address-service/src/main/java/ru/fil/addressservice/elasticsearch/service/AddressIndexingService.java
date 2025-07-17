@@ -19,7 +19,7 @@ public class AddressIndexingService {
 
     public void indexAllAddresses() {
         addressElasticRepository.deleteAll();
-        List<AddressDocument> addresses = apartmentRepository.findAllWithDetails()
+        List<AddressDocument> addresses = apartmentRepository.findAll()
                 .stream()
                 .map(apartmentConverter::mapToAddressDocument)
                 .toList();

@@ -12,7 +12,7 @@ import ru.fil.addressservice.elasticsearch.repository.AddressElasticRepository;
 import ru.fil.addressservice.exception.ApartmentNotFoundException;
 import ru.fil.addressservice.exception.HouseNotFoundException;
 import ru.fil.addressservice.model.dto.ApartmentApplicationDto;
-import ru.fil.addressservice.model.dto.ApartmentDto;
+import ru.fil.addressservice.model.dto.ApartmentSimpleDto;
 import ru.fil.addressservice.model.dto.ApartmentRegisterRequest;
 import ru.fil.addressservice.model.entity.Apartment;
 import ru.fil.addressservice.model.entity.House;
@@ -24,6 +24,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional(readOnly = true)
 public class ApartmentService {
 
     private final ApartmentRepository apartmentRepository;
@@ -32,24 +33,34 @@ public class ApartmentService {
 
     private final AddressElasticRepository addressElasticRepository;
 
-    public List<ApartmentDto> getAllApartmentsWithDetails() {
-        return apartmentRepository.findAllWithDetails()
+    public List<ApartmentSimpleDto> getAllApartments() {
+        return apartmentRepository.findAll()
                 .stream()
                 .map(apartmentConverter::mapToApartmentDto)
                 .toList();
     }
 
+    public List<ApartmentApplicationDto> getAllApartmentsWithDetails() {
+        return apartmentRepository.findAll()
+                .stream()
+                .map(apartmentConverter::mapToApartmentApplicationDto)
+                .toList();
+    }
+
     public List<ApartmentApplicationDto> getAllApartmentsWithDetailsByIdIn(List<Integer> ids) {
-        return apartmentRepository.findAllWithDetailsByIdIn(ids)
+        if(ids == null || ids.isEmpty()) {
+            return getAllApartmentsWithDetails();
+        }
+        return apartmentRepository.findAllByIdIn(ids)
                 .stream()
                 .map(apartmentConverter::mapToApartmentApplicationDto)
                 .toList();
     }
 
     @Cacheable("apartments")
-    public ApartmentDto getApartmentWithDetailsById(int id) {
+    public ApartmentSimpleDto getApartmentById(int id) {
         log.info("Request 'getApartmentById' to DB");
-        Apartment apartment = apartmentRepository.findByIdWithDetails(id)
+        Apartment apartment = apartmentRepository.findById(id)
                 .orElseThrow(ApartmentNotFoundException::new);
         return apartmentConverter.mapToApartmentDto(apartment);
     }

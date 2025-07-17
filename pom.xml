@@ -19,6 +19,7 @@
 
 	<modules>
 		<module>dependency-bom</module>
-	</modules>
+        <module>common</module>
+    </modules>
 
 </project>

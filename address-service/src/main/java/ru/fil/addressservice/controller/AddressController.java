@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.fil.addressservice.elasticsearch.document.AddressDocument;
 import ru.fil.addressservice.elasticsearch.service.AddressElasticService;
 import ru.fil.addressservice.model.dto.ApartmentApplicationDto;
-import ru.fil.addressservice.model.dto.ApartmentDto;
+import ru.fil.addressservice.model.dto.ApartmentSimpleDto;
 import ru.fil.addressservice.model.dto.ApartmentRegisterRequest;
 import ru.fil.addressservice.model.dto.ApartmentRegisterResponse;
 import ru.fil.addressservice.model.dto.HouseRegisterRequest;
@@ -37,14 +37,14 @@ public class AddressController {
     private final AddressElasticService addressElasticService;
 
     @GetMapping("/apartments")
-    public ResponseEntity<List<ApartmentDto>> getAllApartments() {
-        List<ApartmentDto> apartments = apartmentService.getAllApartmentsWithDetails();
+    public ResponseEntity<List<ApartmentSimpleDto>> getAllApartments() {
+        List<ApartmentSimpleDto> apartments = apartmentService.getAllApartments();
         return ResponseEntity.ok(apartments);
     }
 
     @GetMapping("/apartments/{id}")
-    public ResponseEntity<ApartmentDto> getApartmentById(@PathVariable("id") Integer id) {
-        ApartmentDto apartmentDto = apartmentService.getApartmentWithDetailsById(id);
+    public ResponseEntity<ApartmentSimpleDto> getApartmentById(@PathVariable("id") Integer id) {
+        ApartmentSimpleDto apartmentDto = apartmentService.getApartmentById(id);
         return ResponseEntity.ok(apartmentDto);
     }
 
