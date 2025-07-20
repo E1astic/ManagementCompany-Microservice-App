@@ -41,7 +41,13 @@ public class ApplicationConverter {
                                                       Map<Integer, UserApplicationDto> users,
                                                       Map<Integer, ApartmentApplicationDto> apartments) {
         UserApplicationDto currUser = users.get(application.getAuthorId());
-        ApartmentApplicationDto currApartment = apartments.get(currUser.getApartmentId());
+        ApartmentApplicationDto currApartment;
+        if(currUser == null) {
+            currUser = new UserApplicationDto();
+            currApartment = new ApartmentApplicationDto();
+        } else {
+            currApartment = apartments.get(currUser.getApartmentId());
+        }
         return ApplicationFullDto.builder()
                 .number(application.getId())
                 .createdAt(application.getCreatedAt())

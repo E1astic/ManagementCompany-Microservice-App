@@ -4,9 +4,6 @@ server:
 spring:
   application:
     name: auth-service
-  cloud:
-    openfeign:
-      enabled: true
   datasource:
     url: jdbc:postgresql://localhost:5433/users
     username: postgres

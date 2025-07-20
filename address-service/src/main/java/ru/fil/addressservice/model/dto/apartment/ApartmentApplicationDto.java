@@ -1,4 +1,4 @@
-package ru.fil.addressservice.model.dto;
+package ru.fil.addressservice.model.dto.apartment;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

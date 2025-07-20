@@ -1,6 +1,7 @@
 package ru.fil.applicationservice.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.fil.applicationservice.feign.AddressFeignClient;
 import ru.fil.applicationservice.feign.AuthFeignClient;
@@ -15,6 +16,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ApplicationDetailsService {
 
     private final AuthFeignClient authFeignClient;

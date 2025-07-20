@@ -11,9 +11,9 @@ import ru.fil.addressservice.converter.ApartmentConverter;
 import ru.fil.addressservice.elasticsearch.repository.AddressElasticRepository;
 import ru.fil.addressservice.exception.ApartmentNotFoundException;
 import ru.fil.addressservice.exception.HouseNotFoundException;
-import ru.fil.addressservice.model.dto.ApartmentApplicationDto;
-import ru.fil.addressservice.model.dto.ApartmentSimpleDto;
-import ru.fil.addressservice.model.dto.ApartmentRegisterRequest;
+import ru.fil.addressservice.model.dto.apartment.ApartmentApplicationDto;
+import ru.fil.addressservice.model.dto.apartment.ApartmentSimpleDto;
+import ru.fil.addressservice.model.dto.apartment.ApartmentRegisterRequest;
 import ru.fil.addressservice.model.entity.Apartment;
 import ru.fil.addressservice.model.entity.House;
 import ru.fil.addressservice.repository.ApartmentRepository;
@@ -36,7 +36,7 @@ public class ApartmentService {
     public List<ApartmentSimpleDto> getAllApartments() {
         return apartmentRepository.findAll()
                 .stream()
-                .map(apartmentConverter::mapToApartmentDto)
+                .map(apartmentConverter::mapToApartmentSimpleDto)
                 .toList();
     }
 
@@ -59,10 +59,9 @@ public class ApartmentService {
 
     @Cacheable("apartments")
     public ApartmentSimpleDto getApartmentById(int id) {
-        log.info("Request 'getApartmentById' to DB");
         Apartment apartment = apartmentRepository.findById(id)
                 .orElseThrow(ApartmentNotFoundException::new);
-        return apartmentConverter.mapToApartmentDto(apartment);
+        return apartmentConverter.mapToApartmentSimpleDto(apartment);
     }
 
     @Transactional

@@ -7,18 +7,19 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.fil.addressservice.converter.StreetConverter;
 import ru.fil.addressservice.elasticsearch.repository.AddressElasticRepository;
 import ru.fil.addressservice.exception.StreetNotFoundException;
-import ru.fil.addressservice.model.dto.StreetRegisterRequest;
+import ru.fil.addressservice.feign.AuthFeignClient;
+import ru.fil.addressservice.model.dto.street.StreetRegisterRequest;
 import ru.fil.addressservice.model.entity.Apartment;
 import ru.fil.addressservice.model.entity.House;
 import ru.fil.addressservice.model.entity.Street;
 import ru.fil.addressservice.repository.ApartmentRepository;
+import ru.fil.addressservice.repository.HouseRepository;
 import ru.fil.addressservice.repository.StreetRepository;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class StreetService {
 
     private final StreetRepository streetRepository;
@@ -26,6 +27,8 @@ public class StreetService {
     private final AddressElasticRepository addressElasticRepository;
     private final StreetConverter streetConverter;
     private final RedisCacheService redisCacheService;
+    private final HouseRepository houseRepository;
+    private final AuthFeignClient authFeignClient;
 
     @Transactional
     public Integer save(StreetRegisterRequest streetRegisterDto) {
@@ -45,8 +48,13 @@ public class StreetService {
                 .stream()
                 .map(Apartment::getId)
                 .toList();
+
         addressElasticRepository.deleteByApartmentIdIn(apartmentIds);
-        streetRepository.delete(street);
         redisCacheService.evictApartmentsCache(apartmentIds);
+
+        apartmentRepository.deleteByIdIn(apartmentIds);
+        houseRepository.deleteByIdIn(houseIds);
+        streetRepository.deleteByIdNative(id);
+        authFeignClient.deleteUsersByApartmentId(apartmentIds);
     }
 }

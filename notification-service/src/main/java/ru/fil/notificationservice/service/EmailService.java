@@ -32,7 +32,7 @@ public class EmailService {
                                                       ApplicationStatus applicationStatus) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("dinoroma2000@gmail.com");
-        message.setTo("darkr2004@mail.ru");
+        message.setTo("darkr2004@mail.ru");  //emailTo
         message.setSubject("Умедомление о смене статуса заявки");
         String status = extractStatusForText(applicationStatus);
         message.setText(String.format("Статус вашей заявки с номером № %d был изменен на '%s'.\n" +

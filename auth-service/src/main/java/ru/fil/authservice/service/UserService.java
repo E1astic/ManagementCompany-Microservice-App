@@ -17,7 +17,6 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
@@ -29,6 +28,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByUsername(username);
         return getUserDetailsFromUserEntity(user);
@@ -48,10 +48,16 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
+    @Transactional(readOnly = true)
     public List<UserApplicationDto> getAllUserApplicationDto(List<Integer> userIds) {
         return userRepository.findByIdIn(userIds)
                 .stream()
                 .map(userConverter::mapToUserApplicationDto)
                 .toList();
+    }
+
+    @Transactional
+    public int deleteUsersByApartmentIdIn(List<Integer> apartmentIds) {
+        return userRepository.deleteByApartmentIdIn(apartmentIds);
     }
 }

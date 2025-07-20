@@ -1,6 +1,5 @@
 package ru.fil.addressservice.model.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,7 +37,7 @@ public class House {
     @Column(name = "number")
     private String number;
 
-    @OneToMany(mappedBy = "house", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "house")
     private List<Apartment> apartments;
 
     public void addApartment(Apartment apartment) {

@@ -1,6 +1,7 @@
 package ru.fil.addressservice.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -22,4 +23,8 @@ public interface ApartmentRepository extends JpaRepository<Apartment, Integer> {
     Optional<Apartment> findById(@Param("id") int id);
 
     List<Apartment> findByHouseIdIn(List<Integer> ids);
+
+    @Modifying
+    @Query(value = "DELETE FROM Apartments a WHERE a.id IN :ids", nativeQuery = true)
+    int deleteByIdIn(@Param("ids") List<Integer> ids);
 }

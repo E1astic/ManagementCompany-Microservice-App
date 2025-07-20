@@ -1,6 +1,7 @@
 package ru.fil.authservice.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,5 +21,10 @@ public class UserController {
     @GetMapping("/forApp")
     public List<UserApplicationDto> getUsersByIds(@RequestParam("ids") List<Integer> userIds) {
         return userService.getAllUserApplicationDto(userIds);
+    }
+
+    @DeleteMapping("/del/apart")
+    public int deleteUsersByApartmentId(@RequestParam("apartmentIds") List<Integer> apartmentIds) {
+        return userService.deleteUsersByApartmentIdIn(apartmentIds);
     }
 }

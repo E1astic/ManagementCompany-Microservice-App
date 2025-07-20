@@ -1,7 +1,7 @@
 package ru.fil.addressservice.converter;
 
 import org.springframework.stereotype.Component;
-import ru.fil.addressservice.model.dto.StreetRegisterRequest;
+import ru.fil.addressservice.model.dto.street.StreetRegisterRequest;
 import ru.fil.addressservice.model.entity.Street;
 
 @Component

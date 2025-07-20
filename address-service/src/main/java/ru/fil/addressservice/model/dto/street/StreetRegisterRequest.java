@@ -1,4 +1,4 @@
-package ru.fil.addressservice.model.dto;
+package ru.fil.addressservice.model.dto.street;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class HouseRegisterResponse {
+public class StreetRegisterRequest {
 
-    private Integer houseId;
+    private String name;
 }

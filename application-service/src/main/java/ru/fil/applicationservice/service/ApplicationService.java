@@ -20,6 +20,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ApplicationService {
 
     private final ApplicationRepository applicationRepository;
@@ -63,7 +64,6 @@ public class ApplicationService {
         }
     }
 
-    @Transactional(readOnly = true)
     public List<ApplicationFullDto> getAllApplicationsWithDetails() {
         List<Application> applications = applicationRepository.findAll();
         Map<Integer, UserApplicationDto> userDetails = applicationDetailsService.getUserDetails(applications);

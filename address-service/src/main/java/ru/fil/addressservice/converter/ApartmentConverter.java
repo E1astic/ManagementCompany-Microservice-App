@@ -2,16 +2,16 @@ package ru.fil.addressservice.converter;
 
 import org.springframework.stereotype.Component;
 import ru.fil.addressservice.elasticsearch.document.AddressDocument;
-import ru.fil.addressservice.model.dto.ApartmentApplicationDto;
-import ru.fil.addressservice.model.dto.ApartmentSimpleDto;
-import ru.fil.addressservice.model.dto.ApartmentRegisterRequest;
+import ru.fil.addressservice.model.dto.apartment.ApartmentApplicationDto;
+import ru.fil.addressservice.model.dto.apartment.ApartmentSimpleDto;
+import ru.fil.addressservice.model.dto.apartment.ApartmentRegisterRequest;
 import ru.fil.addressservice.model.entity.Apartment;
 import ru.fil.addressservice.model.entity.House;
 
 @Component
 public class ApartmentConverter {
 
-    public ApartmentSimpleDto mapToApartmentDto(Apartment apartment) {
+    public ApartmentSimpleDto mapToApartmentSimpleDto(Apartment apartment) {
         return ApartmentSimpleDto.builder()
                 .house(apartment.getHouse().getNumber())
                 .street(apartment.getHouse().getStreet().getName())

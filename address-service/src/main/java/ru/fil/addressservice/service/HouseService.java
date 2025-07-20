@@ -8,10 +8,12 @@ import ru.fil.addressservice.converter.HouseConverter;
 import ru.fil.addressservice.elasticsearch.repository.AddressElasticRepository;
 import ru.fil.addressservice.exception.HouseNotFoundException;
 import ru.fil.addressservice.exception.StreetNotFoundException;
-import ru.fil.addressservice.model.dto.HouseRegisterRequest;
+import ru.fil.addressservice.feign.AuthFeignClient;
+import ru.fil.addressservice.model.dto.house.HouseRegisterRequest;
 import ru.fil.addressservice.model.entity.Apartment;
 import ru.fil.addressservice.model.entity.House;
 import ru.fil.addressservice.model.entity.Street;
+import ru.fil.addressservice.repository.ApartmentRepository;
 import ru.fil.addressservice.repository.HouseRepository;
 import ru.fil.addressservice.repository.StreetRepository;
 
@@ -23,9 +25,11 @@ public class HouseService {
 
     private final HouseRepository houseRepository;
     private final StreetRepository streetRepository;
+    private final ApartmentRepository apartmentRepository;
     private final AddressElasticRepository addressElasticRepository;
     private final HouseConverter houseConverter;
     private final RedisCacheService redisCacheService;
+    private final AuthFeignClient authFeignClient;
 
     @Transactional
     public Integer save(HouseRegisterRequest houseRegisterRequest) {
@@ -39,13 +43,18 @@ public class HouseService {
     @Transactional
     @CacheEvict(cacheNames = "addresses", allEntries = true)
     public void deleteById(int id) {
-        House house = houseRepository.findById(id).orElseThrow(HouseNotFoundException::new);
+        House house = houseRepository.findByIdWithApartments(id).orElseThrow(HouseNotFoundException::new);
         List<Integer> apartmentIds = house.getApartments()
                 .stream()
                 .map(Apartment::getId)
                 .toList();
+
         addressElasticRepository.deleteByApartmentIdIn(apartmentIds);
-        houseRepository.delete(house);
         redisCacheService.evictApartmentsCache(apartmentIds);
+
+        house.getStreet().getHouses().remove(house);
+        apartmentRepository.deleteByIdIn(apartmentIds);
+        houseRepository.deleteByIdNative(id);
+        authFeignClient.deleteUsersByApartmentId(apartmentIds);
     }
 }

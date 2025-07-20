@@ -25,14 +25,12 @@ public class GatewaySecurityFilter {
                 .authorizeExchange(authExchange -> authExchange
                         .pathMatchers("/auth/login", "/auth/register").permitAll()
                         .pathMatchers("/user/forApp").hasRole("ADMIN")
-                        .pathMatchers("/main/shared").permitAll()
-                        .pathMatchers("/main/admin").hasRole("ADMIN")
-                        .pathMatchers("/address/streets/add", "/address/streets/del",
-                                "/address/houses/add", "/address/houses/del",
+                        .pathMatchers("/address/streets/add", "/address/streets/del/{id}",
+                                "/address/houses/add", "/address/houses/del/{id}",
                                 "/address/apartments/add", "/address/apartments/forApp").hasRole("ADMIN")
                         .pathMatchers("/address/**").permitAll()
                         .pathMatchers("/application/update/{id}/{status}", "/application/all").hasRole("ADMIN")
-                        .pathMatchers("/notification/**").permitAll()
+                        .pathMatchers("/notification/**").hasRole("ADMIN")
                         .anyExchange().authenticated())
                 .addFilterAt(jwtFilter, SecurityWebFiltersOrder.AUTHENTICATION);
 
