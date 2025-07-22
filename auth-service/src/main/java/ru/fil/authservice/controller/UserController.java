@@ -19,8 +19,18 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/forApp")
+    public UserApplicationDto getUserById(@RequestParam("id") Integer id) {
+        return userService.getUserApplicationDtoById(id);
+    }
+
+    @GetMapping("/all/forApp")
     public List<UserApplicationDto> getUsersByIds(@RequestParam("ids") List<Integer> userIds) {
         return userService.getAllUserApplicationDto(userIds);
+    }
+
+    @GetMapping("/admin/forApp")
+    public String getAdminEmail() {
+        return userService.getAdminEmail();
     }
 
     @DeleteMapping("/del/apart")

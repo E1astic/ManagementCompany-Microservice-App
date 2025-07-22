@@ -11,5 +11,11 @@ import java.util.List;
 public interface AuthFeignClient {
 
     @GetMapping("/user/forApp")
+    UserApplicationDto getUserById(@RequestParam("id") Integer id);
+
+    @GetMapping("/user/all/forApp")
     List<UserApplicationDto> getUsersByIds(@RequestParam("ids") List<Integer> userIds);
+
+    @GetMapping("/user/admin/forApp")
+    String getAdminEmail();
 }

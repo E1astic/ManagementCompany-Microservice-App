@@ -50,7 +50,7 @@ public class StreetService {
                 .toList();
 
         addressElasticRepository.deleteByApartmentIdIn(apartmentIds);
-        redisCacheService.evictApartmentsCache(apartmentIds);
+        redisCacheService.evictApartmentIdsCache(apartmentIds);
 
         apartmentRepository.deleteByIdIn(apartmentIds);
         houseRepository.deleteByIdIn(houseIds);

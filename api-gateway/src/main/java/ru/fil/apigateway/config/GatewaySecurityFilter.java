@@ -24,7 +24,7 @@ public class GatewaySecurityFilter {
                 .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
                 .authorizeExchange(authExchange -> authExchange
                         .pathMatchers("/auth/login", "/auth/register").permitAll()
-                        .pathMatchers("/user/forApp").hasRole("ADMIN")
+                        .pathMatchers("/user/forApp", "/user/all/forApp", "/user/admin/forApp").hasRole("ADMIN")
                         .pathMatchers("/address/streets/add", "/address/streets/del/{id}",
                                 "/address/houses/add", "/address/houses/del/{id}",
                                 "/address/apartments/add", "/address/apartments/forApp").hasRole("ADMIN")

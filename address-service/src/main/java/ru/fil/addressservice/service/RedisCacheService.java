@@ -15,15 +15,15 @@ public class RedisCacheService {
 
     private final CacheManager cacheManager;
 
-    public void evictApartmentsCache(List<Integer> apartmentIds) {
-        log.info("method 'evictApartmentsCache'");
+    public void evictApartmentIdsCache(List<Integer> apartmentIds) {
+        log.info("method 'evictApartmentIdsCache'");
         if(apartmentIds == null || apartmentIds.isEmpty()) {
             return;
         }
-        Cache cache = cacheManager.getCache("apartments");
-        if(cache != null) {
-            log.info("evicting cache in method 'evictApartmentsCache'");
-            apartmentIds.forEach(cache::evict);
+        Cache apartmentsCache = cacheManager.getCache("apartments");
+        if(apartmentsCache != null) {
+            log.info("evicting apartmentsCache in method 'evictApartmentIdsCache'");
+            apartmentIds.forEach(apartmentsCache::evict);
         }
     }
 }

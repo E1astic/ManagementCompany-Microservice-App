@@ -20,7 +20,7 @@ public class EmailController {
             @RequestParam("email") String email,
             @RequestParam("appId") Integer appId,
             @RequestParam("status") ApplicationStatus status) {
-        //emailService.sendStatusEmail(email, appId, status);
+        //emailService.sendStatusChangeEmail(email, appId, status);
         return "Сообщение успешно отправлено";
     }
 }

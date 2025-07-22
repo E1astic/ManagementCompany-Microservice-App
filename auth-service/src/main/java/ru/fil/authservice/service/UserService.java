@@ -1,6 +1,7 @@
 package ru.fil.authservice.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -43,9 +44,9 @@ public class UserService implements UserDetailsService {
         );
     }
 
-    @Transactional
-    public void saveUser(User user) {
-        userRepository.save(user);
+    @Transactional(readOnly = true)
+    public UserApplicationDto getUserApplicationDtoById(Integer id) {
+        return getAllUserApplicationDto(List.of(id)).getFirst();
     }
 
     @Transactional(readOnly = true)
@@ -56,8 +57,25 @@ public class UserService implements UserDetailsService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
+    public String getAdminEmail() {
+        return userRepository.findAdmin().get().getEmail();
+    }
+
     @Transactional
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
+
+    @Transactional
+    @CacheEvict(cacheNames = "emails", allEntries = true)
     public int deleteUsersByApartmentIdIn(List<Integer> apartmentIds) {
         return userRepository.deleteByApartmentIdIn(apartmentIds);
+    }
+
+    @Transactional
+    @CacheEvict(cacheNames = "admin-email", allEntries = true)
+    public void updateAdminEmail(String newAdminEmail) {
+        userRepository.updateAdminEmail(newAdminEmail);
     }
 }

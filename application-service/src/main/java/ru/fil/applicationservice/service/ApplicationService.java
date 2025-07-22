@@ -34,9 +34,7 @@ public class ApplicationService {
         int userId = jwtService.getUserIdFromHeader(authHeader);
         Application application = applicationRepository.save(applicationConverter
                 .mapToApplication(applicationCreationDto, userId));
-
-        // отправить уведомление админам а создании новой заявки
-
+        notificationService.sendNewApplicationEmail(application.getId());
         return application.getId();
     }
 
@@ -49,18 +47,18 @@ public class ApplicationService {
     }
 
     @Transactional
-    public void updateApplicationStatus(int id, String status) {
+    public void updateApplicationStatus(int applicationId, String status) {
         ApplicationStatus applicationStatus;
         try {
             applicationStatus = ApplicationStatus.valueOf(status.toUpperCase());
         } catch(IllegalArgumentException e) {
             throw new IncorrectStatusException();
         }
-        int rowsUpdated = applicationRepository.updateStatusById(id, applicationStatus);
+        int rowsUpdated = applicationRepository.updateStatusById(applicationId, applicationStatus);
         if(rowsUpdated == 0) {
             throw new ApplicationNotFoundException();
         } else {
-            notificationService.sendStatusEmail(id, applicationStatus);
+            notificationService.sendStatusChangeEmail(applicationId, applicationStatus);
         }
     }
 
